@@ -12,7 +12,6 @@ public class AttackController : MonoBehaviour
     private bool supAttackTrigger => (Input.GetButtonDown("Fire2") && WeaponName != "");
 
     [SerializeField] private Transform firepoint;
-    public int damage;
     public int MainLv { get; private set; }
     [SerializeField] private string WeaponName;
 

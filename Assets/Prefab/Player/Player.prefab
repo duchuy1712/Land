@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5922831093308063185}
   - component: {fileID: 5922831093308062766}
   - component: {fileID: 7821376111822561498}
-  - component: {fileID: 7082533460720303075}
+  - component: {fileID: 7294090259323456667}
   m_Layer: 7
   m_Name: Player
   m_TagString: PlayerTag
@@ -159,7 +159,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1821386523
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 719546381, guid: 1f55e1ccb90f26349883c704003acb65, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -274,12 +274,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   AttackController: {fileID: 7821376111822561498}
-  data: {fileID: 11400000, guid: df70eb13a41328646ab2a1bbd036285a, type: 2}
-  speed: 30
-  knockback: 5
-  maxJumpHeight: 30
-  maxJumpTime: 2
-  SliceForce: 3
+  PlayerStat: {fileID: 7294090259323456667}
 --- !u!114 &7821376111822561498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,9 +288,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firepoint: {fileID: 5922831092809320895}
-  damage: 1
   WeaponName: 
---- !u!114 &7082533460720303075
+--- !u!114 &7294090259323456667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -304,12 +298,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 5922831093308062761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3b905cff323c074989dab4d76b42fd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 315a4e7157e1543469e92ed94fb4ebf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 10
-  Damage: 1
-  duration: 1
+  live: 0
+  position: {x: 0, y: 0}
+  hp: 0
+  mana: 0
+  damage: 0
+  speed: 25
+  maxJumpHeight: 30
+  maxJumpTime: 2
+  SliceForce: 4
+  baseData: {fileID: 11400000, guid: df70eb13a41328646ab2a1bbd036285a, type: 2}
 --- !u!1 &5922831093855580907
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +385,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1826159651
-  m_SortingLayer: 5
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 885108694, guid: 1f55e1ccb90f26349883c704003acb65, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

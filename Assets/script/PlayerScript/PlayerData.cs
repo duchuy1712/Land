@@ -2,40 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour
+public class PlayerData : CharacterData
 {
-    public int MaxHP;
-    public int CurrentHP { get; private set; }
-    public int Damage;
-    public bool isHurt { get; private set; }
-    public float duration;
-    private float cur_time;
+    public static PlayerData Instance;
 
     private void Awake()
     {
-        CurrentHP = MaxHP;
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
-    private void Update()
+    public int DamageLvl
     {
-        if(isHurt)
-        {
-            cur_time += Time.deltaTime;
-            if(cur_time >= duration)
-            {
-                isHurt = false;
-                cur_time = 0;
-            }
-        }
+        get => PlayerPrefs.GetInt(PlayerDataKey.DamageLvl, 0);
+        set => PlayerPrefs.SetInt(PlayerDataKey.DamageLvl, value);
     }
-
-    public void Get_Damage(int _amount)
+    public int HpLvl
     {
-        CurrentHP -= _amount;
-        if (CurrentHP == 0)
-        {
-            this.gameObject.SetActive(false);
-        }
+        get => PlayerPrefs.GetInt(PlayerDataKey.HpLvl, 0);
+        set => PlayerPrefs.SetInt(PlayerDataKey.HpLvl, value);
     }
 
+    public int CurentLevel
+    {
+        get => PlayerPrefs.GetInt(PlayerDataKey.CurrentLevel, 0);
+        set => PlayerPrefs.SetInt(PlayerDataKey.CurrentLevel, value);
+    }
+    public int ClearedLevel
+    {
+        get => PlayerPrefs.GetInt(PlayerDataKey.ClearedLevel, 0);
+        set => PlayerPrefs.SetInt(PlayerDataKey.ClearedLevel, value);
+    }
+    public int CurrentWeapon
+    {
+        get => PlayerPrefs.GetInt(PlayerDataKey.CurrentWeapon, 0);
+        set => PlayerPrefs.SetInt(PlayerDataKey.CurrentWeapon, value);
+    }
+    public int ManaLvl
+    {
+        get => PlayerPrefs.GetInt(PlayerDataKey.ManaLvl, 0);
+        set => PlayerPrefs.SetInt(PlayerDataKey.ManaLvl, value);
+    }
+}
+public struct PlayerDataKey
+{
+    public const string DamageLvl = "DamageLvl";
+    public const string HpLvl = "HpLvl";
+    public const string ManaLvl = "ManaLvl";
+    public const string CurrentLevel = "CurrentLevel";
+    public const string ClearedLevel = "ClearedLevel";
+    public const string CurrentWeapon = "CurrentWeapon";
+    public const string CurrentPlayerPosition = "CurrentPlayerPosition";
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,26 +9,19 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private Collider2D coll;
     [SerializeField] private LayerMask layer;
     [SerializeField] private AttackController AttackController;
-    [SerializeField] private ScriptableObject data;
+    [SerializeField] private PlayerDataManager PlayerStat;
 
     Vector2 velocity;
     float inputAxis;
 
-    public float speed;
-    public int knockback;
-    public float maxJumpHeight;
-    public float maxJumpTime;
-    public float SliceForce;
-    
-    public float JumpForce => (2f*maxJumpHeight) / (maxJumpTime/2f);
-    public float gravity => (-2f * maxJumpHeight) / Mathf.Pow(maxJumpTime / 2f , 2f);
+    public float JumpForce => (2f * PlayerStat.maxJumpHeight) / (PlayerStat.maxJumpTime /2f);
+    public float gravity => (-2f * PlayerStat.maxJumpHeight) / Mathf.Pow(PlayerStat.maxJumpTime / 2f , 2f);
 
     public bool grounded { get; private set; }
     public bool jumping { get; private set; }
     public bool running => Mathf.Abs(velocity.x) > 0.25f || Mathf.Abs(inputAxis) > 0.25f;
     public bool sliding =>(inputAxis > 0f && velocity.x < 0f) || (inputAxis < 0f && velocity.x > 0f);
     
-
     private void OnEnable()
     {
         rb2d.isKinematic = false;
@@ -66,23 +59,25 @@ public class PlayerController : Singleton<PlayerController>
         rb2d.MovePosition(position);
 
     }
+    //check xem nhân vật có đang trên mặt đất hay không
     public bool Grounded()
     {
         RaycastHit2D hit = Physics2D.BoxCast(rb2d.position, coll.bounds.size - new Vector3(0.1f, 0.5f, 0f), 0f, Vector2.down, 0.5f, layer);
         return hit.collider != null;
-    } 
+    }
+    // check nếu nhân vật va phải vật cản khi đang nhảy, lập tức rơi xuống
     public bool platformhit()
     {
         RaycastHit2D platformhit = Physics2D.Raycast(rb2d.position, Vector2.up, 1.7f, layer);
         return platformhit.collider == null;
     }
-
+    //lệnh di chuyển
     private void moving()
     {
         if (AttackController.groundAttack == false)
         {
             inputAxis = Input.GetAxis("Horizontal");
-            velocity.x = Mathf.MoveTowards(velocity.x, inputAxis * speed, (speed * SliceForce) * Time.deltaTime);
+            velocity.x = Mathf.MoveTowards(velocity.x, inputAxis * PlayerStat.speed, (PlayerStat.speed * PlayerStat.SliceForce) * Time.deltaTime);
             if (velocity.x > 0)
                 transform.eulerAngles = Vector3.zero;
             else if (velocity.x < 0)
@@ -90,8 +85,8 @@ public class PlayerController : Singleton<PlayerController>
         }
         else
             velocity.x = 0;
-    } 
-    
+    }
+    // nhảy
     private void jump()
     {
         velocity.y = Mathf.Max(velocity.y, 0f);
@@ -104,6 +99,7 @@ public class PlayerController : Singleton<PlayerController>
             jumping = true;
         }
     }
+    //tăng trọng lực khi rơi
     private void applyGravity()
     {
         bool falling = velocity.y < 0 || !Input.GetKey(KeyCode.W);

@@ -8,6 +8,5 @@ public class PlayerScriptAble : ScriptableObject
     public int damage;
     public int hp;
     public int mana;
-    public float speed;
-    public float jumpForce;
+    public Vector2 position;
 }
