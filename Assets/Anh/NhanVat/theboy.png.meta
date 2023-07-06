@@ -67,8 +67,8 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
+    maxTextureSize: 4096
+    resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -410,7 +410,7 @@ TextureImporter:
         width: 64
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -418,6 +418,27 @@ TextureImporter:
       bones: []
       spriteID: bab5e613d2653544c8a64b91840267b0
       internalID: 885108694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: theboy_14
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e818dc7dafc4ea64f88eedcce3b4b9e0
+      internalID: 2082763529
       vertices: []
       indices: 
       edges: []
@@ -439,6 +460,7 @@ TextureImporter:
       theboy_11: 719546381
       theboy_12: -1128853708
       theboy_13: 885108694
+      theboy_14: 2082763529
       theboy_2: 763393322
       theboy_3: 414457214
       theboy_4: 437014509

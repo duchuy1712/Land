@@ -76,9 +76,9 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!1 &5922831093308062761
 GameObject:
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5922831093308063185}
   - component: {fileID: 5922831093308062766}
   - component: {fileID: 7821376111822561498}
-  - component: {fileID: 7294090259323456667}
+  - component: {fileID: 1241604578960355860}
   m_Layer: 7
   m_Name: Player
   m_TagString: PlayerTag
@@ -187,7 +187,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 36d4aea07926b6341837e4439cc5ac1c, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -255,6 +255,7 @@ MonoBehaviour:
   anim: {fileID: 5922831093308062767}
   sprite: {fileID: 5922831093308062760}
   AttackController: {fileID: 7821376111822561498}
+  health: 0
 --- !u!114 &5922831093308062766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,7 +275,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   AttackController: {fileID: 7821376111822561498}
-  PlayerStat: {fileID: 7294090259323456667}
+  PlayerStat: {fileID: 1241604578960355860}
+  knockbackX: 25
+  knockbackY: 5
+  StunCountdown: 0.15
+  immortal_time: 2
 --- !u!114 &7821376111822561498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,8 +293,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firepoint: {fileID: 5922831092809320895}
-  WeaponName: 
---- !u!114 &7294090259323456667
+  subWeaponName: 
+--- !u!114 &1241604578960355860
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -298,18 +303,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5922831093308062761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 315a4e7157e1543469e92ed94fb4ebf3, type: 3}
+  m_Script: {fileID: 11500000, guid: b86f37a955fc0bb4993d07bef83659c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  live: 0
-  position: {x: 0, y: 0}
-  hp: 0
-  mana: 0
-  damage: 0
-  speed: 25
-  maxJumpHeight: 30
-  maxJumpTime: 2
-  SliceForce: 4
   baseData: {fileID: 11400000, guid: df70eb13a41328646ab2a1bbd036285a, type: 2}
 --- !u!1 &5922831093855580907
 GameObject:

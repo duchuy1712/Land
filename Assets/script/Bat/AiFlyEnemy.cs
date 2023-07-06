@@ -15,6 +15,11 @@ public class AiFlyEnemy : MonoBehaviour
 
     [SerializeField] Seeker seeker;
     [SerializeField] Rigidbody2D rb2d;
+
+    private void OnEnable()
+    {
+        target = PlayerController.Instance.transform;
+    }
     public void UpdatePath()
     {
         if(seeker.IsDone())

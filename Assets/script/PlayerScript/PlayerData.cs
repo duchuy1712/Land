@@ -1,58 +1,57 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : CharacterData
+public class PlayerData : MonoBehaviour
 {
-    public static PlayerData Instance;
+    //dữ liệu lấy từ prefab
+    private int mana;
+    private int score;
+    private int highScore;
+    private int damage;
+    //dữ liệu được lấy từ scriptable object
+    public int live { get; private set; }
+    public int hp { get; private set; }
+    public float speed { get; private set; }
+    public float maxJumpHeight { get; private set; }
+    public float maxJumpTime { get; private set; }
+    public float SliceForce { get; private set; }
+    [SerializeField] private PlayerScriptAble baseData;
 
-    private void Awake()
+    private void OnEnable()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
+        Setupdata();
+    }
+    private void Setupdata()
+    {
+        hp = baseData.hp;
+        speed = baseData.speed;
+        maxJumpHeight = baseData.maxJumpHeight;
+        maxJumpTime = baseData.maxJumpTime;
+        SliceForce = baseData.SliceForce;
+        live = DataGame.Instance.userdata.Live;
+        mana = DataGame.Instance.userdata.mana;
+        score = DataGame.Instance.userdata.score;
     }
 
-    public int DamageLvl
+    public void hurt(int _amount)
     {
-        get => PlayerPrefs.GetInt(PlayerDataKey.DamageLvl, 0);
-        set => PlayerPrefs.SetInt(PlayerDataKey.DamageLvl, value);
-    }
-    public int HpLvl
-    {
-        get => PlayerPrefs.GetInt(PlayerDataKey.HpLvl, 0);
-        set => PlayerPrefs.SetInt(PlayerDataKey.HpLvl, value);
+        if(hp <= 0)
+        {
+            if (live > 0)
+                hp = baseData.hp;
+                live--;
+
+            gameObject.SetActive(false);
+        }
+        else if(hp > 0)
+            hp -= _amount;
+        
     }
 
-    public int CurentLevel
+    public void Heal(int _amount)
     {
-        get => PlayerPrefs.GetInt(PlayerDataKey.CurrentLevel, 0);
-        set => PlayerPrefs.SetInt(PlayerDataKey.CurrentLevel, value);
+        hp += _amount;
     }
-    public int ClearedLevel
-    {
-        get => PlayerPrefs.GetInt(PlayerDataKey.ClearedLevel, 0);
-        set => PlayerPrefs.SetInt(PlayerDataKey.ClearedLevel, value);
-    }
-    public int CurrentWeapon
-    {
-        get => PlayerPrefs.GetInt(PlayerDataKey.CurrentWeapon, 0);
-        set => PlayerPrefs.SetInt(PlayerDataKey.CurrentWeapon, value);
-    }
-    public int ManaLvl
-    {
-        get => PlayerPrefs.GetInt(PlayerDataKey.ManaLvl, 0);
-        set => PlayerPrefs.SetInt(PlayerDataKey.ManaLvl, value);
-    }
-}
-public struct PlayerDataKey
-{
-    public const string DamageLvl = "DamageLvl";
-    public const string HpLvl = "HpLvl";
-    public const string ManaLvl = "ManaLvl";
-    public const string CurrentLevel = "CurrentLevel";
-    public const string ClearedLevel = "ClearedLevel";
-    public const string CurrentWeapon = "CurrentWeapon";
-    public const string CurrentPlayerPosition = "CurrentPlayerPosition";
+
 }

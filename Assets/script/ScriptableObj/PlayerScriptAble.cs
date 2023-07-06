@@ -5,8 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Character", menuName = "Character Datas")]
 public class PlayerScriptAble : ScriptableObject
 {
-    public int damage;
     public int hp;
-    public int mana;
-    public Vector2 position;
+    public float speed;
+    public float maxJumpHeight;
+    public float maxJumpTime;
+    public float SliceForce;
 }

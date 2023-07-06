@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2785804191858001973}
   - component: {fileID: 2785804191858001972}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,9 +65,9 @@ GameObject:
   - component: {fileID: 2785804192803670975}
   - component: {fileID: 2785804192803670960}
   - component: {fileID: 2785804192803670961}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bat
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1980249559
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -1322527756, guid: 644e12c42fe994c44b5f940da4af8d36, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -150,12 +150,12 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.014038086, y: 0.5620942}
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 1.2692566
 --- !u!50 &2785804192803670986
 Rigidbody2D:
   serializedVersion: 4

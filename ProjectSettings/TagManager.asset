@@ -27,7 +27,7 @@ TagManager:
   - Ground
   - Player
   - Weapon
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -68,4 +68,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2473580773
+    locked: 0
+  - name: PlayerGhostMode
+    uniqueID: 3056940023
     locked: 0

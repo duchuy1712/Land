@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d05b7c30b09f0854ebdfa6fd352f5989, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  damage: 1
   hp: 10
-  mana: 50
-  speed: 30
-  jumpForce: 30
+  speed: 25
+  maxJumpHeight: 30
+  maxJumpTime: 2
+  SliceForce: 4

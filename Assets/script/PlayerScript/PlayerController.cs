@@ -4,24 +4,31 @@ using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
+    [Header("component & scrpit")]
     [SerializeField] private Camera maincamera;
     [SerializeField] private Rigidbody2D rb2d;
     [SerializeField] private Collider2D coll;
     [SerializeField] private LayerMask layer;
-    [SerializeField] private AttackController AttackController;
-    [SerializeField] private PlayerDataManager PlayerStat;
-
+    public AttackController AttackController;
+    public PlayerData PlayerStat;
+    [Header("knockback")]
+    public float knockbackX;
+    public float knockbackY;
+    public float StunCountdown;
+    public float KBcountdown { get; private set; }
+    private bool KnockFromRight;
     Vector2 velocity;
     float inputAxis;
-
-    public float JumpForce => (2f * PlayerStat.maxJumpHeight) / (PlayerStat.maxJumpTime /2f);
-    public float gravity => (-2f * PlayerStat.maxJumpHeight) / Mathf.Pow(PlayerStat.maxJumpTime / 2f , 2f);
-
+    public bool immortal_state { get; private set; }
+    public float immortal_time;
+    public float immortal_curtime { get; private set; }
     public bool grounded { get; private set; }
     public bool jumping { get; private set; }
     public bool running => Mathf.Abs(velocity.x) > 0.25f || Mathf.Abs(inputAxis) > 0.25f;
     public bool sliding =>(inputAxis > 0f && velocity.x < 0f) || (inputAxis < 0f && velocity.x > 0f);
-    
+    public float JumpForce => (2f * PlayerStat.maxJumpHeight) / (PlayerStat.maxJumpTime / 2f);
+    public float gravity => (-2f * PlayerStat.maxJumpHeight) / Mathf.Pow(PlayerStat.maxJumpTime / 2f, 2f);
+
     private void OnEnable()
     {
         rb2d.isKinematic = false;
@@ -40,24 +47,48 @@ public class PlayerController : Singleton<PlayerController>
     private void Update()
     {
         moving();
+        if(immortal_curtime > 0 && immortal_state == true)
+        {
+            Physics2D.IgnoreLayerCollision(7,9,true);
+            immortal_curtime -= Time.deltaTime;
+        }
+        else
+        {
+            Physics2D.IgnoreLayerCollision(7, 9, false);
+            immortal_curtime = immortal_time;
+            immortal_state = false;
+        }
         if (Grounded() && AttackController.groundAttack == false)
-            jump();
+           jump();
         if (!platformhit())
-            velocity.y = -JumpForce;
-        applyGravity();
+           velocity.y = -JumpForce;
         AttackController.StartAttack();
+        applyGravity();
         
     }   
     private void FixedUpdate()
     {
-        Vector2 position = rb2d.position;
-        position += velocity * Time.deltaTime;
-        Vector2 left = maincamera.ScreenToWorldPoint(Vector2.zero);
-        Vector2 right = maincamera.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-        position.x = Mathf.Clamp(position.x, left.x + 0.5f, right.x - 0.5f);
-
-        rb2d.MovePosition(position);
-
+        if (KBcountdown > 0)
+        {
+            if (KnockFromRight == true)
+            {
+                rb2d.velocity = new Vector2(knockbackX, knockbackY);
+            }
+            if (KnockFromRight == false)
+            {
+                rb2d.velocity = new Vector2(-knockbackX, knockbackY);
+            }
+            KBcountdown -= Time.deltaTime;
+        }
+        else
+        {
+            Vector2 position = rb2d.position;
+            position += velocity * Time.deltaTime; // di chuyển nhân vật đến vị trí chỉ định(velocity)
+            Vector2 left = maincamera.ScreenToWorldPoint(Vector2.zero);
+            Vector2 right = maincamera.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+            position.x = Mathf.Clamp(position.x, left.x - 1f, right.x + 1f);
+            rb2d.MovePosition(position);
+        }
     }
     //check xem nhân vật có đang trên mặt đất hay không
     public bool Grounded()
@@ -71,7 +102,7 @@ public class PlayerController : Singleton<PlayerController>
         RaycastHit2D platformhit = Physics2D.Raycast(rb2d.position, Vector2.up, 1.7f, layer);
         return platformhit.collider == null;
     }
-    //lệnh di chuyển
+    //cập nhật vị trí tiếp theo của nhân vật
     private void moving()
     {
         if (AttackController.groundAttack == false)
@@ -116,10 +147,24 @@ public class PlayerController : Singleton<PlayerController>
         {
             Debug.Log("Hit!");
         }
+        if (collision.gameObject.CompareTag("Enemy") && immortal_state == false)
+        {
+            KBcountdown = StunCountdown;
+            if (collision.gameObject.transform.position.x > transform.position.x)
+            {
+                KnockFromRight = false;
+            }
+            else if (collision.gameObject.transform.position.x < transform.position.x)
+            {
+                KnockFromRight = true;
+            }
+            immortal_state = true;
+        }
+        else
+            return;
     }
     private void OnDrawGizmos()
     {
         Gizmos.DrawRay(rb2d.position, Vector2.up * 1.7f);
     }
-    
 }
