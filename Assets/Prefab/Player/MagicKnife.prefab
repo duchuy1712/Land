@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 809119531804464922}
   - component: {fileID: 809119531804464921}
+  - component: {fileID: 4078710657450256258}
   - component: {fileID: 809119531804464917}
-  - component: {fileID: 809119531804464916}
   - component: {fileID: 809119531804464923}
   m_Layer: 8
   m_Name: MagicKnife
-  m_TagString: Sword
+  m_TagString: subWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,6 +87,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4078710657450256258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809119531804464920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de071767a4ef204c9f846d03a3cd04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 25
+  rb2d: {fileID: 809119531804464917}
+  basedirec: {x: 1, y: 1}
 --- !u!50 &809119531804464917
 Rigidbody2D:
   serializedVersion: 4
@@ -108,21 +123,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &809119531804464916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 809119531804464920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1c340bd50a3cbf4c8cf5d2d660052b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  speed: 25
-  rb2d: {fileID: 809119531804464917}
 --- !u!61 &809119531804464923
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -13,10 +13,13 @@ TagManager:
   - Mana
   - Sup1
   - Sup2
-  - BigMana
+  - subWeapon
+  - Candle
+  - Item
   - SmallMana
-  - BigHeath
   - SmallHeath
+  - BigHeath
+  - SupWeapon
   layers:
   - Default
   - TransparentFX

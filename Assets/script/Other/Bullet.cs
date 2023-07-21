@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public int damage;
     public float speed;
 
     protected virtual void Movement()
     {
     }
-    public virtual void Setup(int _damage, Vector2 dir)
+    public virtual void Setup(Vector2 dir)
     {
-        damage = _damage;
     }
     public virtual void ResetBullet()
     {

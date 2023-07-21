@@ -14,6 +14,14 @@ public class MenuScript : MonoBehaviour
     private void Awake()
     {
         Level = DataGame.Instance.globaldata.Level;
+        if(Level == 0 )
+        {
+            continueButton.interactable = false;
+        }
+        else
+        {
+            continueButton.interactable = true;
+        }
     }
     private void Start()
     {
@@ -21,30 +29,30 @@ public class MenuScript : MonoBehaviour
         continueButton.onClick.AddListener(Continue);
         exitButton.onClick.AddListener(Exit);
     }
-
     private void NewGame()
     {
         resetLevel();
         SceneManager.LoadScene(Level);
+        AudioManager.Instance.PlayGlobalSFX("ButtonClick");
     }
     private void Continue()
     {
-        SceneManager.LoadScene(Level);
+       SceneManager.LoadScene(Level);
+        AudioManager.Instance.PlayGlobalSFX("ButtonClick");
     }
-
     private void Exit()
     {
         Application.Quit();
+        AudioManager.Instance.PlayGlobalSFX("ButtonClick");
     }
-    
     private void resetLevel()
     {
-        DataGame.Instance.globaldata.Level = 1;
-        DataGame.Instance.userdata.Live = 3;
-        DataGame.Instance.userdata.mana = 5;
-        DataGame.Instance.userdata.mainWeaponLv = 0;
-        DataGame.Instance.userdata.subWeapon = "MagicKnife";
-        DataGame.Instance.userdata.score = 0;
+        PlayerPrefs.DeleteKey(GlobalDataKey.Level);
+        PlayerPrefs.DeleteKey(UserDataKey.Live);
+        PlayerPrefs.DeleteKey(UserDataKey.mana);
+        PlayerPrefs.DeleteKey(UserDataKey.mainWeapon);
+        PlayerPrefs.DeleteKey(UserDataKey.subWeapon);
+        PlayerPrefs.DeleteKey(UserDataKey.score);
         Level = DataGame.Instance.globaldata.Level;
     }    
 }

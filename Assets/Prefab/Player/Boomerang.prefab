@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 1977705153943083624}
   - component: {fileID: 1977705153943083625}
   - component: {fileID: 1977705153943083637}
-  - component: {fileID: 1977705153943083638}
+  - component: {fileID: 4757423818392051415}
   - component: {fileID: 8700310828054392725}
   m_Layer: 8
   m_Name: Boomerang
-  m_TagString: Sword
+  m_TagString: subWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,7 +130,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1977705153943083638
+--- !u!114 &4757423818392051415
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,12 +139,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1977705153943083626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83e6cb9870ebb9544a787a8a3ed7f77c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6de071767a4ef204c9f846d03a3cd04a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  speed: 40
+  speed: 50
   rb2d: {fileID: 1977705153943083637}
+  basedirec: {x: 1, y: 0}
 --- !u!58 &8700310828054392725
 CircleCollider2D:
   m_ObjectHideFlags: 0

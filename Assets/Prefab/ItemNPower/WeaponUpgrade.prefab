@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2179733243874030798}
   m_Layer: 8
   m_Name: WeaponUpgrade
-  m_TagString: PowerUp
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

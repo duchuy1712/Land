@@ -9,21 +9,25 @@ public class WeaponAnimation : MonoBehaviour
     private const string Empty = "Empty";
     private const string Sword = "Sword";
     private string current_st;
+    private string current_clip;
 
     private void LateUpdate()
     {
-        if ((AttackController.airAttack || AttackController.groundAttack) && AttackController.mainAttack && PlayerController.Instance.KBcountdown <= 0)
-             animation_editor(Sword + AttackController.Lv);
+        if (AttackController.mainAttack == true && PlayerController.Instance.KBcountdown <= 0)
+            animation_editor(Sword + AttackController.Lv, "attack");
         else
-            animation_editor(Empty);
+            animation_editor(Empty,null);
     }
 
-    
-    private void animation_editor(string new_st)
+
+    private void animation_editor(string new_st,string new_clip)
     {
-        if (new_st == current_st)
+        if (new_st == current_st && new_clip == current_clip)
             return;
         anim.Play(new_st);
-        new_st = current_st;
+        AudioManager.Instance.PlayUserSFX(new_clip);
+        current_clip = new_clip;
+        current_st = new_st;
+        
     }
 }

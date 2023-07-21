@@ -11,7 +11,7 @@ public class UserData : MonoBehaviour
    }
     public int mana
     {
-        get => PlayerPrefs.GetInt(UserDataKey.mana,0);
+        get => PlayerPrefs.GetInt(UserDataKey.mana,5);
         set => PlayerPrefs.SetInt(UserDataKey.mana,value);
     }
     public int mainWeaponLv
@@ -21,7 +21,7 @@ public class UserData : MonoBehaviour
     }
     public string subWeapon
     {
-        get => PlayerPrefs.GetString(UserDataKey.subWeapon, "MagicKnife");
+        get => PlayerPrefs.GetString(UserDataKey.subWeapon, "Boomerang");
         set => PlayerPrefs.SetString(UserDataKey.subWeapon, value);
     }
     public int score

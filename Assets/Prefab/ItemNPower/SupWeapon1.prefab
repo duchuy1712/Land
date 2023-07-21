@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6268576013923183857}
   m_Layer: 8
   m_Name: SupWeapon1
-  m_TagString: Sup1
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1442711465
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -175081435, guid: 52f8b8183bb5beb4d878cac8a653536c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

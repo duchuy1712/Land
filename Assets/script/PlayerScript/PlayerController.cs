@@ -25,7 +25,7 @@ public class PlayerController : Singleton<PlayerController>
     public bool grounded { get; private set; }
     public bool jumping { get; private set; }
     public bool running => Mathf.Abs(velocity.x) > 0.25f || Mathf.Abs(inputAxis) > 0.25f;
-    public bool sliding =>(inputAxis > 0f && velocity.x < 0f) || (inputAxis < 0f && velocity.x > 0f);
+    public bool sliding => (inputAxis > 0f && velocity.x < 0f) || (inputAxis < 0f && velocity.x > 0f);
     public float JumpForce => (2f * PlayerStat.maxJumpHeight) / (PlayerStat.maxJumpTime / 2f);
     public float gravity => (-2f * PlayerStat.maxJumpHeight) / Mathf.Pow(PlayerStat.maxJumpTime / 2f, 2f);
 
@@ -47,9 +47,9 @@ public class PlayerController : Singleton<PlayerController>
     private void Update()
     {
         moving();
-        if(immortal_curtime > 0 && immortal_state == true)
+        if (immortal_curtime > 0 && immortal_state == true)
         {
-            Physics2D.IgnoreLayerCollision(7,9,true);
+            Physics2D.IgnoreLayerCollision(7, 9, true);
             immortal_curtime -= Time.deltaTime;
         }
         else
@@ -58,14 +58,13 @@ public class PlayerController : Singleton<PlayerController>
             immortal_curtime = immortal_time;
             immortal_state = false;
         }
-        if (Grounded() && AttackController.groundAttack == false)
-           jump();
+        if (Grounded() && AttackController.Attack == false)
+            jump();
         if (!platformhit())
-           velocity.y = -JumpForce;
-        AttackController.StartAttack();
+            velocity.y = -JumpForce;
         applyGravity();
-        
-    }   
+
+    }
     private void FixedUpdate()
     {
         if (KBcountdown > 0)
@@ -105,7 +104,12 @@ public class PlayerController : Singleton<PlayerController>
     //cập nhật vị trí tiếp theo của nhân vật
     private void moving()
     {
-        if (AttackController.groundAttack == false)
+        if ((AttackController.Attack == true && Grounded()) || PlayerStat.hp < 0)
+        {
+            velocity.x = 0;
+            return;
+        }
+        if (PlayerStat.hp > 0)
         {
             inputAxis = Input.GetAxis("Horizontal");
             velocity.x = Mathf.MoveTowards(velocity.x, inputAxis * PlayerStat.speed, (PlayerStat.speed * PlayerStat.SliceForce) * Time.deltaTime);
@@ -114,15 +118,13 @@ public class PlayerController : Singleton<PlayerController>
             else if (velocity.x < 0)
                 transform.eulerAngles = Vector3.up * 180f;
         }
-        else
-            velocity.x = 0;
     }
     // nhảy
     private void jump()
     {
         velocity.y = Mathf.Max(velocity.y, 0f);
         jumping = velocity.y > 0;
-        
+
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -139,7 +141,7 @@ public class PlayerController : Singleton<PlayerController>
 
         velocity.y += gravity * multiplier * Time.deltaTime;
         velocity.y = Mathf.Max(velocity.y, gravity / 2f);
-        
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

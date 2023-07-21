@@ -12,7 +12,7 @@ public class NextLevel : MonoBehaviour
         {
             Save();
             DataGame.Instance.globaldata.Level = nextLevelIndex;
-            SceneManager.LoadScene(nextLevelIndex);
+            OnGameManager.Instance.GameCompelete();
         }
     }
 
@@ -21,5 +21,6 @@ public class NextLevel : MonoBehaviour
         DataGame.Instance.userdata.Live = PlayerController.Instance.PlayerStat.live;
         DataGame.Instance.userdata.mainWeaponLv = PlayerController.Instance.AttackController.MainWeaponLv;
         DataGame.Instance.userdata.subWeapon = PlayerController.Instance.AttackController.subWeaponName;
+        DataGame.Instance.userdata.score = PlayerController.Instance.PlayerStat.score;
     }
 }
