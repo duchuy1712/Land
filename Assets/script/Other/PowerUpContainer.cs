@@ -8,9 +8,9 @@ public class PowerUpContainer : MonoBehaviour
     [SerializeField] private Animator anim;
     private string ItemName;
     private string current_st;
-    private void Awake()
-    {
-        switch(item)
+    private void OnEnable()
+{
+        switch (item)
         {
             case Item.weapon:
                 if (PlayerController.Instance.AttackController.MainWeaponLv < 2)
@@ -70,7 +70,7 @@ public class PowerUpContainer : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Sword") || collision.gameObject.CompareTag("subWeapon"))
+        if (collision.gameObject.CompareTag("Sword") || collision.gameObject.CompareTag("subWeapon"))
         {
             AudioManager.Instance.PlayGlobalSFX("Hit");
             GameObject obj = ObjectPooling.Instance.GetObjectFromPool(ItemName);

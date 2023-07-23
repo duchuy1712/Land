@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MagicKnife
   m_EditorClassIdentifier: 
   damage: 3
-  ManaCost: 5
+  ManaCost: 2

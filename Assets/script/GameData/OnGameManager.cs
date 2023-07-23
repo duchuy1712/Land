@@ -23,6 +23,7 @@ public class OnGameManager : Singleton<OnGameManager>
     public void GameCompelete()
     {
         gameState = GAME_STATE.Game_Complete;
+        AudioManager.Instance.PlayMusic(null);
         AudioManager.Instance.PlayGlobalSFX("Victory");
         Time.timeScale = 0;
 
@@ -30,6 +31,7 @@ public class OnGameManager : Singleton<OnGameManager>
     public void GameOver()
     {
         gameState = GAME_STATE.Game_Over;
+        AudioManager.Instance.PlayMusic(null);
         AudioManager.Instance.PlayGlobalSFX("GameOver");
         Time.timeScale = 0;
     }

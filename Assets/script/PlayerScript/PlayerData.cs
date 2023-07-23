@@ -19,9 +19,6 @@ public class PlayerData : MonoBehaviour
     public float SliceForce { get; private set; }
     [SerializeField] private PlayerScriptAble baseData;
 
-    //private float current_time = 0;
-    public float pause_time;
-
     private void OnEnable()
     {
         Setupdata();
@@ -39,6 +36,7 @@ public class PlayerData : MonoBehaviour
         }
         else if(live <= 0)
         {
+            PlayerPrefs.DeleteKey(UserDataKey.score);
             PlayerPrefs.DeleteKey(UserDataKey.Live);
             OnGameManager.Instance.GameOver();
         }
@@ -54,16 +52,16 @@ public class PlayerData : MonoBehaviour
         mana = DataGame.Instance.userdata.mana;
         score = DataGame.Instance.userdata.score;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Item"))
+        if (collision.gameObject.CompareTag("Item"))
         {
             AudioManager.Instance.PlayUserSFX("GetItem");
-            if(collision.gameObject.name == "BigManaPotion(Clone)")
+            if (collision.gameObject.name == "BigManaPotion(Clone)")
             {
                 PlayerController.Instance.PlayerStat.GetMana(5);
             }
-            else if(collision.gameObject.name == "SmallManaPotion(Clone)")
+            else if (collision.gameObject.name == "SmallManaPotion(Clone)")
             {
                 PlayerController.Instance.PlayerStat.GetMana(2);
             }
@@ -75,8 +73,10 @@ public class PlayerData : MonoBehaviour
             {
                 PlayerController.Instance.PlayerStat.Heal(5);
             }
+            collision.gameObject.SetActive(false);
         }
     }
+    
     public void hurt(int _amount)
     {
         hp -= _amount;

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
-    public bool Attack { get; private set; }
-    public bool subAttackTrigger => (Input.GetButtonDown("Fire2") && subWeaponName != "" && mana >= ManaCost);
-    public bool mainAttack { get; private set; }
-    private bool subAttack;
+    public bool airAttack;
+    public bool groundAttack;
+    public bool mainAttack;
+    public bool supAttack;
+    public bool subAttackTrigger => (Input.GetButtonDown("Fire2") && subWeaponName != "" && mana >= ManaCost && supAttack == false);
+    [SerializeField] private GameObject weapon;
     [SerializeField] private Transform firepoint;
     public int MainWeaponLv { get; private set; }
     public string Lv { get; private set; }
@@ -23,35 +25,19 @@ public class AttackController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1") || subAttackTrigger)
-            Attack = true;
-        if (Input.GetButtonDown("Fire1"))
-        {
-            subAttack = false;
-            mainAttack = true;
-        }
-        else if (subAttackTrigger)
-        {
-            mainAttack = false;
-            subAttack = true;
-        }
         mana = PlayerController.Instance.PlayerStat.mana;
         switch (MainWeaponLv)
         {
             case 0:
-                Lv = "Lv1";
                 damge = 1;
                 break;
             case 1:
-                Lv = "Lv2";
                 damge = 2;
                 break;
             case 2:
-                Lv = "Lv3";
                 damge = 3;
                 break;
             default:
-                Lv = "Lv1";
                 damge = 1;
                 break;
         }
@@ -66,25 +52,61 @@ public class AttackController : MonoBehaviour
             subDamage = 1;
         }
     }
+    public void StartAttack()
+    {
+        if (PlayerController.Instance.Grounded())
+        {
+            airAttack = false;
+            if ((Input.GetButtonDown("Fire1") || subAttackTrigger) && groundAttack == false)
+                groundAttack = true;
+        }
+        else
+        {
+            groundAttack = false;
+            if ((Input.GetButtonDown("Fire1") || subAttackTrigger) && airAttack == false)
+                airAttack = true;
+        }
+
+        if (Input.GetButtonDown("Fire1") && mainAttack == false)
+        {
+            supAttack = false;
+            mainAttack = true;
+        }
+        else if (subAttackTrigger)
+        {
+            mainAttack = false;
+            supAttack = true;
+        }
+
+    }
+    public void swing()
+    {
+        if (mainAttack == true)
+        {
+            weapon.SetActive(true);
+        }
+    }
     public void shoot()
     {
-        if (subAttack)
+        if (supAttack)
         {
+            PlayerController.Instance.PlayerStat.UseMana(ManaCost);
             GameObject obj = ObjectPooling.Instance.GetObjectFromPool(subWeaponName);
             obj.transform.position = firepoint.position;
             obj.SetActive(true);
         }
     }
-
     public void EndAttack()
     {
-        Attack = false;
+        airAttack = false;
+        groundAttack = false;
         mainAttack = false;
-        subAttack = false;
+        supAttack = false;
+        weapon.SetActive(false);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Item"))
+        if (collision.gameObject.CompareTag("Item"))
         {
             AudioManager.Instance.PlayUserSFX("UpGrade");
             if (collision.gameObject.name == "WeaponUpgrade(Clone)")
@@ -107,6 +129,7 @@ public class AttackController : MonoBehaviour
             {
                 subWeaponName = "Boomerang";
             }
+            collision.gameObject.SetActive(false);
         }
     }
 }

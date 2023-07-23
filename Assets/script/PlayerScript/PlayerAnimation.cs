@@ -8,33 +8,41 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private AttackController AttackController;
     private string current_st;
-
-    public float health;
     private void LateUpdate()
     {
         UpdateAnim();
     }
     public void UpdateAnim()
     {
+        if (PlayerController.Instance.PlayerStat.hp <= 0)
+        {
+            Physics2D.IgnoreLayerCollision(7, 9, true);
+            animation_editor(ANIM_PARAM.Death);
+        }
+        else
         if (PlayerController.Instance.KBcountdown <= 0)
         {
-            if (AttackController.Attack == true)
-            {
-                animation_editor(ANIM_PARAM.Attack);
-                return;
-            }
             if (PlayerController.Instance.Grounded())
             {
-                if (!PlayerController.Instance.running)
-                    animation_editor(ANIM_PARAM.Idle);
-                else if (PlayerController.Instance.sliding)
-                    animation_editor(ANIM_PARAM.Slide);
-                else if (PlayerController.Instance.running)
-                    animation_editor(ANIM_PARAM.Move);
+                if (!AttackController.groundAttack)
+                {
+                    if (!PlayerController.Instance.running)
+                        animation_editor(ANIM_PARAM.Idle);
+                    else if (PlayerController.Instance.sliding)
+                        animation_editor(ANIM_PARAM.Slide);
+                    else if (PlayerController.Instance.running)
+                        animation_editor(ANIM_PARAM.Move);
+                }
+                else
+                    animation_editor(ANIM_PARAM.GroundAttack);
             }
             else
             {
-                animation_editor(ANIM_PARAM.Jump);
+                if (!AttackController.airAttack)
+                {
+                    animation_editor(ANIM_PARAM.Jump);
+                }
+                else animation_editor(ANIM_PARAM.AirAttack);
             }
         }
         else if (PlayerController.Instance.KBcountdown > 0)
@@ -51,7 +59,6 @@ public class PlayerAnimation : MonoBehaviour
             tmp.a = 1f;
         }
         sprite.color = tmp;
-
     }
     //lệnh chuyển animation
     private void animation_editor(string new_st)
@@ -68,6 +75,8 @@ public struct ANIM_PARAM
     public const string Move = "move";
     public const string Jump = "jump";
     public const string Slide = "slide";
-    public const string Attack = "Attack";
+    public const string AirAttack = "AirAttack";
+    public const string GroundAttack = "GroundAttack";
     public const string Hurt = "hurt";
+    public const string Death = "Death";
 }

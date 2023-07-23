@@ -21,13 +21,13 @@ public class GameOver : MonoBehaviour
             DataGame.Instance.userdata.highscore = DataGame.Instance.userdata.score;
         if (OnGameManager.Instance.gameState == GAME_STATE.Game_Over)
         {
-            AudioManager.Instance.PlayGlobalSFX("");
             UI.sprite = gameOver;
         }
         else if(OnGameManager.Instance.gameState == GAME_STATE.Game_Complete)
         {
-            AudioManager.Instance.PlayGlobalSFX("");
             UI.sprite = gameComplete;
+            if (DataGame.Instance.globaldata.Level == 3)
+                continueButton.interactable = false;
         }
     }
 

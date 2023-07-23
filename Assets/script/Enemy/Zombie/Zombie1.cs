@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Zombie1 : MonoBehaviour
 {
+    [Header("stat")]
     private Vector2 velocity;
     public Rigidbody2D rb;
     public float speed = 2;
+    private float _speed;
+    private float _range;
 
     [Header("knockback")]
     public float knockbackX;
@@ -18,13 +21,19 @@ public class Zombie1 : MonoBehaviour
     public float range;
     public LayerMask layer;
 
+    private void OnBecameInvisible()
+    {
+        gameObject.SetActive(false);
+    }
     private void OnEnable()
     {
+        _speed = speed;
+        _range = range;
         Vector3 direction = PlayerController.Instance.transform.position - this.transform.position;
         if (direction.x < 0)
         {
-            speed = -speed;
-            range = -range;
+            _speed = -_speed;
+            _range = -_range;
         }
         else
             return;
@@ -33,10 +42,10 @@ public class Zombie1 : MonoBehaviour
     {
         if (!WallCheck())
         {
-            range = -range;
-            speed = -speed;
+            _speed = -_speed;
+            _range = -_range;
         }
-        if (speed > 0)
+        if (_speed > 0)
         {
             transform.eulerAngles = Vector3.zero;
         }
@@ -45,13 +54,13 @@ public class Zombie1 : MonoBehaviour
     }
     private bool WallCheck()
     {
-        RaycastHit2D WallHit = Physics2D.Raycast(rb.position, Vector2.right, range, layer);
+        RaycastHit2D WallHit = Physics2D.Raycast(rb.position, Vector2.right, _range, layer);
         return WallHit.collider == null;
     }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(rb.position,new Vector3(rb.position.x + range, rb.position.y));
+        Gizmos.DrawLine(rb.position,new Vector3(rb.position.x + _range, rb.position.y));
     }
     private void FixedUpdate()
     {
@@ -69,7 +78,7 @@ public class Zombie1 : MonoBehaviour
         }
         else
         {
-            rb.velocity = new Vector2(speed, rb.velocity.y);
+            rb.velocity = new Vector2(_speed, rb.velocity.y);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

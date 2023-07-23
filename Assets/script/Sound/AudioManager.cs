@@ -18,10 +18,10 @@ public class AudioManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(gameObject);
+        OnLevelWasLoaded(SceneManager.GetActiveScene().buildIndex);
         musicSource.mute = !DataGame.Instance.globaldata.Music;
         GlobalSfxSource.mute = !DataGame.Instance.globaldata.Sfx;
         UserSfxSource.mute = !DataGame.Instance.globaldata.Sfx;
-        OnLevelWasLoaded(SceneManager.GetActiveScene().buildIndex);
     }
     public Sound[] musicBg, GlobalSfxSound, UserSfxSound;
     public AudioSource musicSource, GlobalSfxSource, UserSfxSource;

@@ -30,9 +30,9 @@ public class Boomerang : Bullet
             transform.eulerAngles = Vector3.up * 180;
         }
     }
-    public override void Setup(int _damage, Vector2 dir)
+    public override void Setup(Vector2 dir)
     {
-        base.Setup(_damage, dir);
+        base.Setup(dir);
         dir = direction;
     }
     private void OnBecameInvisible()

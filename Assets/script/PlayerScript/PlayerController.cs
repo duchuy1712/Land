@@ -24,7 +24,7 @@ public class PlayerController : Singleton<PlayerController>
     public float immortal_curtime { get; private set; }
     public bool grounded { get; private set; }
     public bool jumping { get; private set; }
-    public bool running => Mathf.Abs(velocity.x) > 0.25f || Mathf.Abs(inputAxis) > 0.25f;
+    public bool running => (Mathf.Abs(velocity.x) > 0.25f || Mathf.Abs(inputAxis) > 0.25f) && AttackController.groundAttack == false;
     public bool sliding => (inputAxis > 0f && velocity.x < 0f) || (inputAxis < 0f && velocity.x > 0f);
     public float JumpForce => (2f * PlayerStat.maxJumpHeight) / (PlayerStat.maxJumpTime / 2f);
     public float gravity => (-2f * PlayerStat.maxJumpHeight) / Mathf.Pow(PlayerStat.maxJumpTime / 2f, 2f);
@@ -58,12 +58,12 @@ public class PlayerController : Singleton<PlayerController>
             immortal_curtime = immortal_time;
             immortal_state = false;
         }
-        if (Grounded() && AttackController.Attack == false)
+        if (Grounded() && AttackController.groundAttack == false)
             jump();
         if (!platformhit())
             velocity.y = -JumpForce;
+        AttackController.StartAttack();
         applyGravity();
-
     }
     private void FixedUpdate()
     {
@@ -104,12 +104,7 @@ public class PlayerController : Singleton<PlayerController>
     //cập nhật vị trí tiếp theo của nhân vật
     private void moving()
     {
-        if ((AttackController.Attack == true && Grounded()) || PlayerStat.hp < 0)
-        {
-            velocity.x = 0;
-            return;
-        }
-        if (PlayerStat.hp > 0)
+        if (AttackController.groundAttack == false && PlayerStat.hp > 0)
         {
             inputAxis = Input.GetAxis("Horizontal");
             velocity.x = Mathf.MoveTowards(velocity.x, inputAxis * PlayerStat.speed, (PlayerStat.speed * PlayerStat.SliceForce) * Time.deltaTime);
@@ -118,6 +113,8 @@ public class PlayerController : Singleton<PlayerController>
             else if (velocity.x < 0)
                 transform.eulerAngles = Vector3.up * 180f;
         }
+        else
+            velocity.x = 0;
     }
     // nhảy
     private void jump()

@@ -4,30 +4,36 @@ using UnityEngine;
 
 public class WeaponAnimation : MonoBehaviour
 {
-    [SerializeField] private Animator anim;
     [SerializeField] private AttackController AttackController;
-    private const string Empty = "Empty";
-    private const string Sword = "Sword";
-    private string current_st;
-    private string current_clip;
+    [SerializeField] private BoxCollider2D hitbox;
+    [SerializeField] private SpriteRenderer weapon;
+    [SerializeField] private Sprite weaponLv1, weaponLv2, weaponLv3;
 
-    private void LateUpdate()
+    private void OnEnable()
     {
-        if (AttackController.mainAttack == true && PlayerController.Instance.KBcountdown <= 0)
-            animation_editor(Sword + AttackController.Lv, "attack");
-        else
-            animation_editor(Empty,null);
-    }
-
-
-    private void animation_editor(string new_st,string new_clip)
-    {
-        if (new_st == current_st && new_clip == current_clip)
-            return;
-        anim.Play(new_st);
-        AudioManager.Instance.PlayUserSFX(new_clip);
-        current_clip = new_clip;
-        current_st = new_st;
-        
+        AudioManager.Instance.PlayUserSFX("attack");
+        switch (AttackController.MainWeaponLv)
+        {
+            case 0:
+                hitbox.offset = new Vector2(3.411802f, -1.43344f);
+                hitbox.size = new Vector2(2.596104f, 0.6961317f);
+                weapon.sprite = weaponLv1;
+                break;
+            case 1:
+                hitbox.offset = new Vector2(3.941008f, -1.389339f);
+                hitbox.size = new Vector2(3.654514f, 0.7843323f);
+                weapon.sprite = weaponLv2;
+                break;
+            case 2:
+                hitbox.offset = new Vector2(4.634014f, -1.383039f);
+                hitbox.size = new Vector2(5.040527f, 0.7969322f);
+                weapon.sprite = weaponLv3;
+                break;
+            default:
+                hitbox.offset = new Vector2(3.411802f, -1.43344f);
+                hitbox.size = new Vector2(2.596104f, 0.6961317f);
+                weapon.sprite = weaponLv1;
+                break;
+        }
     }
 }
