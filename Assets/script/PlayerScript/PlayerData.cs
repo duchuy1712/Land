@@ -89,17 +89,15 @@ public class PlayerData : MonoBehaviour
     }
     private void Heal(int _amount)
     {
-        if(hp < baseData.maxHp)
-            hp += _amount;
-        else if (hp >= baseData.maxHp)
+        hp += _amount;
+        if (hp >= baseData.maxHp)
             hp = baseData.maxHp;
     }
     private void GetMana(int _amount)
     {
-        if (mana < baseData.maxMana)
-            mana += _amount;
-        else if (mana >= baseData.maxMana)
-            mana = baseData.maxMana;
+        mana += _amount;
+        if (mana >= baseData.maxMana)
+           mana = baseData.maxMana;
     }
     public void UseMana(int _amount)
     {

@@ -45,6 +45,7 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(GlobalSfxSound, x => x.AudioName == name);
         if (s == null || GlobalSfxSource.mute == true)
         {
+            GlobalSfxSource.Stop();
             return;
         }
         else
@@ -58,6 +59,7 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(UserSfxSound, x => x.AudioName == name);
         if (s == null || UserSfxSource.mute == true)
         {
+            UserSfxSource.Stop();
             return;
         }
         else

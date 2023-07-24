@@ -14,7 +14,7 @@ public class MenuScript : MonoBehaviour
     private void Awake()
     {
         Level = DataGame.Instance.globaldata.Level;
-        if(Level == 0 )
+        if(Level == 0 || Level == 1 )
         {
             continueButton.interactable = false;
         }
@@ -47,12 +47,7 @@ public class MenuScript : MonoBehaviour
     }
     private void resetLevel()
     {
-        PlayerPrefs.DeleteKey(GlobalDataKey.Level);
-        PlayerPrefs.DeleteKey(UserDataKey.Live);
-        PlayerPrefs.DeleteKey(UserDataKey.mana);
-        PlayerPrefs.DeleteKey(UserDataKey.mainWeapon);
-        PlayerPrefs.DeleteKey(UserDataKey.subWeapon);
-        PlayerPrefs.DeleteKey(UserDataKey.score);
+        DataGame.Instance.resetLevel();
         Level = DataGame.Instance.globaldata.Level;
     }    
 }

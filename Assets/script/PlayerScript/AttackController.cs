@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
-    public bool airAttack;
-    public bool groundAttack;
-    public bool mainAttack;
-    public bool supAttack;
+    public bool airAttack { get; private set; }
+    public bool groundAttack { get; private set; }
+    public bool mainAttack { get; private set; }
+    public bool supAttack { get; private set; }
     public bool subAttackTrigger => (Input.GetButtonDown("Fire2") && subWeaponName != "" && mana >= ManaCost && supAttack == false);
     [SerializeField] private GameObject weapon;
     [SerializeField] private Transform firepoint;

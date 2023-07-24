@@ -109,6 +109,10 @@ SpriteAtlas:
   - {fileID: 147274703, guid: c6f80388dc9db7143b7fb61265b84035, type: 3}
   - {fileID: -1254420658, guid: c6f80388dc9db7143b7fb61265b84035, type: 3}
   - {fileID: 1857699691, guid: c6f80388dc9db7143b7fb61265b84035, type: 3}
+  - {fileID: -320036427, guid: 1fe3086996aeb6c41b7c9fc0fe3fa91b, type: 3}
+  - {fileID: -658097999, guid: 1fe3086996aeb6c41b7c9fc0fe3fa91b, type: 3}
+  - {fileID: 1379416321, guid: 1fe3086996aeb6c41b7c9fc0fe3fa91b, type: 3}
+  - {fileID: 294499753, guid: 1fe3086996aeb6c41b7c9fc0fe3fa91b, type: 3}
   - {fileID: -186119090, guid: e74e17cb6dac33e4fa65f0b87a0c597e, type: 3}
   - {fileID: 881032089, guid: e74e17cb6dac33e4fa65f0b87a0c597e, type: 3}
   - {fileID: 1774297555, guid: e74e17cb6dac33e4fa65f0b87a0c597e, type: 3}
@@ -196,6 +200,10 @@ SpriteAtlas:
   - Tile8_9
   - Tile8_11
   - Tile8_10
+  - Tile3_3
+  - Tile3_2
+  - Tile3_1
+  - Tile3_0
   - Tile2_8
   - Tile2_2
   - Tile2_3
