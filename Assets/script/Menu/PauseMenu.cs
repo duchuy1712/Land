@@ -15,13 +15,12 @@ public class PauseMenu : MonoBehaviour
     }
     private void Continue()
     {
-        Time.timeScale = 1;
+        OnGameManager.Instance.GameResume();
         gameObject.SetActive(false);
     }
     private void Exit()
     {
-        gameObject.SetActive(false);
-        Time.timeScale = 1;
+        OnGameManager.Instance.GameStart();
         SceneManager.LoadScene(0);
     }
 }

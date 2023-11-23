@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Subweapon : MonoBehaviour
+public class Subweapon : Bullet
 {
-    public float speed;
     public Rigidbody2D rb2d;
     private Vector2 direction;
     public Vector2 basedirec;
@@ -12,11 +11,11 @@ public class Subweapon : MonoBehaviour
     {
         direction = basedirec;
         rb2d.gravityScale = 0;
-        if (PlayerManager.Instance.transform.eulerAngles.Equals(Vector3.zero))
+        if (PlayerController.Instance.transform.eulerAngles == Vector3.zero)
         {
             direction = new Vector2(direction.x, direction.y);
         }
-        else if (PlayerManager.Instance.transform.eulerAngles.Equals(Vector3.up * 180))
+        else if (PlayerController.Instance.transform.eulerAngles == Vector3.up * 180)
         {
             direction = new Vector2(-direction.x, direction.y);
         }
@@ -32,6 +31,11 @@ public class Subweapon : MonoBehaviour
         {
             transform.eulerAngles = Vector3.up * 180;
         }
+    }
+    public override void Setup(Vector2 dir)
+    {
+        base.Setup(dir);
+        dir = direction;
     }
     private void OnBecameInvisible()
     {

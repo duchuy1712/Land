@@ -4,10 +4,20 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 
-public class AudioManager : Singleton<AudioManager>
+public class AudioManager : MonoBehaviour
 {
+    public static AudioManager Instance;
+
     private void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
         OnLevelWasLoaded(SceneManager.GetActiveScene().buildIndex);
         musicSource.mute = !DataGame.Instance.globaldata.Music;
         GlobalSfxSource.mute = !DataGame.Instance.globaldata.Sfx;
@@ -19,18 +29,15 @@ public class AudioManager : Singleton<AudioManager>
     public void PlayMusic(string name)
     {
         Sound s = Array.Find(musicBg, x => x.AudioName == name);
-        if ((s == null || musicSource.mute == true))
+        if (s == null || musicSource.mute == true)
         {
             musicSource.Stop();
             return;
         }
         else
         {
-            if (musicSource.enabled != false)
-            {   musicSource.clip = s.clip;
-            musicSource.Play(); }
-            else
-                return;
+            musicSource.clip = s.clip;
+            musicSource.Play();
         }
     }
     public void PlayGlobalSFX(string name)

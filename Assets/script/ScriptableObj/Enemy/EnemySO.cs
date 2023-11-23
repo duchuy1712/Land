@@ -12,5 +12,4 @@ public class EnemySO : ScriptableObject
     public int hp;
     public int point;
     public int damge;
-    public float StunTime;
 }

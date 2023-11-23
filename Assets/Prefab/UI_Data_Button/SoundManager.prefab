@@ -177,13 +177,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicBg:
   - AudioName: MenuScreen
-    clip: {fileID: 8300000, guid: 1b48e648383e3ea42ba646ea7ca9257f, type: 3}
+    clip: {fileID: 8300000, guid: 9b0b02c05713fbb40816ec60adb0b383, type: 3}
   - AudioName: Lv1
     clip: {fileID: 8300000, guid: 7954bd768b010164c961f0bca26861ff, type: 3}
   - AudioName: Lv2
     clip: {fileID: 8300000, guid: a228471ee005ec84abf4963cb4be7173, type: 3}
   - AudioName: Lv3
-    clip: {fileID: 8300000, guid: e9a9958e48acdad4fa98109218f2c104, type: 3}
+    clip: {fileID: 8300000, guid: 5e0df03dc63a73f45b2a464d001500e0, type: 3}
   GlobalSfxSound:
   - AudioName: Hit
     clip: {fileID: 8300000, guid: f0bb46a9330c3524bb01822c735080f3, type: 3}
@@ -194,7 +194,7 @@ MonoBehaviour:
   - AudioName: Victory
     clip: {fileID: 8300000, guid: 1458814be37057f449a8cc5e99704204, type: 3}
   - AudioName: ButtonClick
-    clip: {fileID: 8300000, guid: b0eff1ca299247c45a2b0f498ddaedf1, type: 3}
+    clip: {fileID: 8300000, guid: 437a9ccfcec844a4bb7bcba61f18ce7f, type: 3}
   UserSfxSound:
   - AudioName: attack
     clip: {fileID: 8300000, guid: e4d23915c9201de44b61b82b8ac570b2, type: 3}

@@ -15,4 +15,3 @@ MonoBehaviour:
   hp: 1
   point: 50
   damge: 1
-  StunTime: 0.5

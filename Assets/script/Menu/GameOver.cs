@@ -16,30 +16,27 @@ public class GameOver : MonoBehaviour
     {
         continueButton.onClick.AddListener(Continue);
         quitButton.onClick.AddListener(Quit);
-        Score.text = PlayerManager.Instance.Stat.score.ToString();
-        if(PlayerManager.Instance.Stat.live <= 0)
+        Score.text = PlayerController.Instance.PlayerStat.score.ToString();
+        if (OnGameManager.Instance.gameState == GAME_STATE.Game_Over)
         {
             UI.sprite = gameOver;
         }
-        else
+        else if(OnGameManager.Instance.gameState == GAME_STATE.Game_Complete)
         {
             UI.sprite = gameComplete;
         }
-        if (PlayerManager.Instance.Stat.score > DataGame.Instance.userdata.highscore)
-            DataGame.Instance.userdata.highscore = PlayerManager.Instance.Stat.score;
     }
 
     private void Continue()
     {
         AudioManager.Instance.PlayGlobalSFX(null);
-        Time.timeScale = 1;
+        OnGameManager.Instance.GameResume();
         SceneManager.LoadScene(DataGame.Instance.globaldata.Level);
     }
     private void Quit()
     {
         AudioManager.Instance.PlayGlobalSFX(null);
-        UIGame.Instance.GameOver.SetActive(false);
-        Time.timeScale = 1;
+        OnGameManager.Instance.GameStart();
         SceneManager.LoadScene(0);
     }
 }

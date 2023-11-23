@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class UserData : MonoBehaviour
 {
-    [SerializeField] PlayerScriptAble BaseStat;
    public int Live
    {
-        get => PlayerPrefs.GetInt(UserDataKey.Live, BaseStat.Live);
+        get => PlayerPrefs.GetInt(UserDataKey.Live, 3);
         set => PlayerPrefs.SetInt(UserDataKey.Live, value);
    }
     public int mana
     {
-        get => PlayerPrefs.GetInt(UserDataKey.mana,BaseStat.StartUpMana);
+        get => PlayerPrefs.GetInt(UserDataKey.mana,5);
         set => PlayerPrefs.SetInt(UserDataKey.mana,value);
     }
     public int mainWeaponLv
@@ -20,10 +19,10 @@ public class UserData : MonoBehaviour
         get => PlayerPrefs.GetInt(UserDataKey.mainWeapon,0);
         set => PlayerPrefs.SetInt(UserDataKey.mainWeapon, value);
     }
-    public int subWeapon
+    public string subWeapon
     {
-        get => PlayerPrefs.GetInt(UserDataKey.subWeapon, 0);
-        set => PlayerPrefs.SetInt(UserDataKey.subWeapon, value);
+        get => PlayerPrefs.GetString(UserDataKey.subWeapon, "Boomerang");
+        set => PlayerPrefs.SetString(UserDataKey.subWeapon, value);
     }
     public int score
     {
@@ -44,4 +43,5 @@ public struct UserDataKey
     public const string mainWeapon = "mainWeapon";
     public const string score = "score";
     public const string highScore = "highScore";
+
 }
