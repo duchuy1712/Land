@@ -25,6 +25,7 @@ public class SoundSetting : MonoBehaviour
             DataGame.Instance.globaldata.Music = false;
         MusicOff.SetActive(!DataGame.Instance.globaldata.Music);
         AudioManager.Instance.musicSource.mute = !DataGame.Instance.globaldata.Music;
+        Debug.Log(DataGame.Instance.globaldata.Music.ToString());
     }
     private void Sfx()
     {

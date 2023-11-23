@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a40b9bec1a84f748adb0585b801f3a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  ItemType: Mana
+  value: 10
 --- !u!50 &1900537519793535360
 Rigidbody2D:
   serializedVersion: 4
@@ -120,7 +121,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &3120680024569034465
 BoxCollider2D:
   m_ObjectHideFlags: 0

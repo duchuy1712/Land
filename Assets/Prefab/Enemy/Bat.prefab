@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AiControl: {fileID: 2785804192803670960}
-  range: 8.44
+  range: 8.57
   player:
     serializedVersion: 2
     m_Bits: 128

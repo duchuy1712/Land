@@ -7,8 +7,6 @@ public class ObjectPooling : Singleton<ObjectPooling>
     public List<GameObject> listObjectToPool = new List<GameObject>();
     public int size;
     Dictionary<string, List<GameObject>> poolDict = new Dictionary<string, List<GameObject>>();
-    // Bullet
-    //"Bullet", List<GameObject>
 
     private void Awake()
     {
@@ -35,12 +33,10 @@ public class ObjectPooling : Singleton<ObjectPooling>
                 int temp = i;
                 if (!poolDict[key][temp].activeInHierarchy)
                 {
-                    //poolDict[key][temp].SetActive(true);
                     return poolDict[key][temp];
                 }
             }
             int _index = -1;
-            //Spawn new object for adding to pool
             for (int i = 0; i < listObjectToPool.Count; i++)
             {
                 if (listObjectToPool[i].name.Equals(key))
@@ -50,19 +46,9 @@ public class ObjectPooling : Singleton<ObjectPooling>
                 }
             }
             GameObject newObj = Instantiate(listObjectToPool[_index], transform);
-            //newObj.SetActive(true);
             poolDict[key].Add(newObj);
             return newObj;
         }
         return null;
-        //GameObject newObj = Instantiate(objectToPool, transform);
-        //newObj.SetActive(true);
-
-        //if (!poolDict.ContainsKey(key))
-        //{
-        //    poolDict.Add(key, new List<GameObject>());
-        //}
-        //poolDict[key].Add(newObj);
-        //return newObj;
     }
 }

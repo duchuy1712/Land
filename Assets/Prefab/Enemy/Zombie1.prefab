@@ -164,9 +164,7 @@ MonoBehaviour:
   minX: {fileID: 1182489045555892106}
   maxX: {fileID: 1182489046910828025}
   disCheck: 0.75
-  knockbackX: 2
-  knockbackY: 1
-  StunCountdown: 0.2
+  stat: {fileID: 1982823897493347420}
 --- !u!114 &1982823897493347420
 MonoBehaviour:
   m_ObjectHideFlags: 0

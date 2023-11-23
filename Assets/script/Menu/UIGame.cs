@@ -4,55 +4,41 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class UIGame : MonoBehaviour
+public class UIGame : Singleton<UIGame>
 {
-    public SubWeaponIcon[] icon;
     [SerializeField] private Text live;
     [SerializeField] private Text mana;
-    [SerializeField] private Image supweaponicon;
+    [SerializeField] private Image CurrentSupWeaponIcon;
+    [SerializeField] private Sprite[] SupWeaponIconList;
     [SerializeField] private Text Score;
     [SerializeField] private Text HightScore;
     [SerializeField] private Slider HealthBar;
-    [SerializeField] private GameObject GameOver;
+    public GameObject GameOver;
     [SerializeField] private GameObject PauseMenu;
-
-
+    private void UpdateUi()
+    {
+        live.text = PlayerManager.Instance.Stat.live.ToString();
+        mana.text = PlayerManager.Instance.Stat.mana.ToString();
+        Score.text = "Score - " + PlayerManager.Instance.Stat.score;
+        HightScore.text = "HiScore - " + DataGame.Instance.userdata.highscore;
+        HealthBar.value = PlayerManager.Instance.Stat.hp;
+        CurrentSupWeaponIcon.sprite = SupWeaponIconList[PlayerManager.Instance.AttackControl.CurrentSubWeapon];
+    }
     private void Update()
     {
-        live.text = PlayerController.Instance.PlayerStat.live.ToString();
-        mana.text = PlayerController.Instance.PlayerStat.mana.ToString();
-        Score.text = "Score - " + PlayerController.Instance.PlayerStat.score;
-        HightScore.text = "HiScore - " + DataGame.Instance.userdata.highscore;
-        HealthBar.value = PlayerController.Instance.PlayerStat.hp;
-        SubWeaponIcon(PlayerController.Instance.AttackController.subWeaponName);
-        if (OnGameManager.Instance.gameState == GAME_STATE.Game_Over || OnGameManager.Instance.gameState == GAME_STATE.Game_Complete)
-        {
-            GameOver.SetActive(true);
-        }
-        else
-        {
-            GameOver.SetActive(false);
-        }
+        UpdateUi();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (OnGameManager.Instance.gameState == GAME_STATE.Game_Pause)
+            if (Time.timeScale.Equals(0))
             {
-                OnGameManager.Instance.GameResume();
+                Time.timeScale = 1;
                 PauseMenu.SetActive(false);
             }
-            else if(OnGameManager.Instance.gameState != GAME_STATE.Game_Pause)
+            else
             {
-                OnGameManager.Instance.GamePause();
+                Time.timeScale = 0;
                 PauseMenu.SetActive(true);
             }
         }
-    }
-    private void SubWeaponIcon(string name)
-    {
-        SubWeaponIcon s = Array.Find(icon, x => x.Name == name);
-        if (s != null)
-            supweaponicon.sprite = s.Icon;
-        else
-            return;
     }
 }

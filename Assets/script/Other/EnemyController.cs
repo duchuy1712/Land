@@ -21,8 +21,6 @@ public class EnemyController : MonoBehaviour
     public float StunCountdown;
     private float KBcountdown;
     private bool KnockFromRight;
-
-
     private void Update()
     {
         if (hp <= 0)
@@ -68,9 +66,8 @@ public class EnemyController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Sword"))
+        if (collision.gameObject.CompareTag("MainWeapon"))
         {
-            
             KBcountdown = StunCountdown;
             if (collision.gameObject.transform.position.x > transform.position.x)
             {
@@ -80,14 +77,14 @@ public class EnemyController : MonoBehaviour
             {
                 KnockFromRight = true;
             }
-            hurt(PlayerController.Instance.AttackController.damge);
+            hurt(PlayerManager.Instance.AttackControl.mainDamge);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("PlayerTag"))
         {
-            PlayerController.Instance.PlayerStat.hurt(damge);
+            PlayerManager.Instance.Stat.hurt(damge);
         }
         
     }
