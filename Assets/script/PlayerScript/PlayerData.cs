@@ -5,6 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class PlayerData : MonoBehaviour
 {
+    public bool immortal { get; private set; }
+    public bool stun { get; private set; }
+    public bool Reset { get; private set; }
+    public float immortalTime;
+    private float immortalTimeCount;
+    public float stunTime;
+    private float stunTimeCount;
+    public float ResetTime;
+    private float ResetTimeCount;
     //dữ liệu lấy từ prefab
     public int mana { get; private set; }
     public int score { get; private set; }
@@ -17,14 +26,34 @@ public class PlayerData : MonoBehaviour
     public float maxJumpHeight { get; private set; }
     public float maxJumpTime { get; private set; }
     public float SliceForce { get; private set; }
-    [SerializeField] private PlayerScriptAble baseData;
+    public PlayerScriptAble baseData;
 
     private void OnEnable()
     {
         Setupdata();
     }
+    private void Update()
+    {
+        if (Reset.Equals(true))
+            ResetGame();
+        if (immortal.Equals(true))
+            getHit();
+    }
+    private void ResetGame()
+    {
+        if (ResetTimeCount > 0)
+        {
+            ResetTimeCount -= Time.deltaTime;
+        }
+        else
+        {
+            Reset = false;
+            Death();
+        }
+    }
     private void Death()
     {
+        Physics2D.IgnoreLayerCollision(7, 9, false);
         live -= 1;
         if (live > 0)
         {
@@ -38,16 +67,12 @@ public class PlayerData : MonoBehaviour
         {
             PlayerPrefs.DeleteKey(UserDataKey.score);
             PlayerPrefs.DeleteKey(UserDataKey.Live);
-            OnGameManager.Instance.GameOver();
+            GameOver();
         }
     }
     private void Setupdata()
     {
-        hp = baseData.hp;
-        speed = baseData.speed;
-        maxJumpHeight = baseData.maxJumpHeight;
-        maxJumpTime = baseData.maxJumpTime;
-        SliceForce = baseData.SliceForce;
+        hp = baseData.maxHp;
         live = DataGame.Instance.userdata.Live;
         mana = DataGame.Instance.userdata.mana;
         score = DataGame.Instance.userdata.score;
@@ -57,35 +82,65 @@ public class PlayerData : MonoBehaviour
         if (collision.gameObject.CompareTag("Item"))
         {
             AudioManager.Instance.PlayUserSFX("GetItem");
-            if (collision.gameObject.name == "BigManaPotion(Clone)")
+            switch(collision.gameObject.GetComponent<PowerUp>().ItemType)
             {
-                PlayerController.Instance.PlayerStat.GetMana(5);
+                case "Health":
+                    Heal(collision.gameObject.GetComponent<PowerUp>().value);
+                    break;
+                case "Mana":
+                    GetMana(collision.gameObject.GetComponent<PowerUp>().value);
+                    break;
             }
-            else if (collision.gameObject.name == "SmallManaPotion(Clone)")
-            {
-                PlayerController.Instance.PlayerStat.GetMana(2);
-            }
-            else if (collision.gameObject.name == "SmallHealth(Clone)")
-            {
-                PlayerController.Instance.PlayerStat.Heal(2);
-            }
-            else if (collision.gameObject.name == "BigHealth(Clone)")
-            {
-                PlayerController.Instance.PlayerStat.Heal(5);
-            }
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
         }
     }
-    
+    private void getHit()
+    {
+        if (stunTimeCount > 0)
+        {
+            stunTimeCount -= Time.deltaTime;
+        }
+        else
+        {
+            stun = false;
+        }
+        if (immortalTimeCount > 0)
+        {
+            immortalTimeCount -= Time.deltaTime;
+        }
+        else
+        {
+            Physics2D.IgnoreLayerCollision(7, 9, false);
+            immortal = false;
+        }
+    }
     public void hurt(int _amount)
     {
         hp -= _amount;
+        Physics2D.IgnoreLayerCollision(7, 9, true);
         if (hp <= 0)
         {
+            Reset = true;
+            ResetTimeCount = ResetTime;
             hp = 0;
             AudioManager.Instance.PlayMusic(null);
             AudioManager.Instance.PlayGlobalSFX("Death");
+            PlayerManager.Instance.Animation.DeathAnimation();
         }
+        else if(immortal.Equals(false))
+        {
+            stunTimeCount = stunTime;
+            immortalTimeCount = immortalTime;
+            immortal = true;
+            stun = true;
+        }
+    }
+    private void GameOver()
+    {
+        AudioManager.Instance.PlayMusic(null);
+        AudioManager.Instance.PlayGlobalSFX("GameOver");
+        Time.timeScale = 0;
+        UIGame.Instance.GameOver.SetActive(true);
     }
     private void Heal(int _amount)
     {
@@ -93,7 +148,7 @@ public class PlayerData : MonoBehaviour
         if (hp >= baseData.maxHp)
             hp = baseData.maxHp;
     }
-    private void GetMana(int _amount)
+    public void GetMana(int _amount)
     {
         mana += _amount;
         if (mana >= baseData.maxMana)

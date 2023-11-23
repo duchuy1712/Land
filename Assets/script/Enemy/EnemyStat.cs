@@ -8,6 +8,8 @@ public class EnemyStat : MonoBehaviour
     private int hp;
     private int damage;
     private int point;
+    private float StunCountdown;
+    public bool IsStunning { get; private set; }
 
     private void Awake()
     {
@@ -15,15 +17,34 @@ public class EnemyStat : MonoBehaviour
         damage = Stat.damge;
         point = Stat.point;
     }
+    private void Update()
+    {
+        if(IsStunning.Equals(true))
+        {
+            if (StunCountdown > 0)
+            {
+                StunCountdown -= Time.deltaTime;
+            }
+            else
+            {
+                IsStunning = false;
+            }
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Sword"))
+        if(collision.gameObject.CompareTag("mainWeapon"))
         {
-            hurt(PlayerController.Instance.AttackController.damge);
+            hurt(PlayerManager.Instance.AttackControl.mainDamge);
         } 
-        if(collision.gameObject.CompareTag("subWeapon"))
+        else if(collision.gameObject.CompareTag("subWeapon"))
         {
-            hurt(PlayerController.Instance.AttackController.subDamage);
+            hurt(PlayerManager.Instance.AttackControl.subDamage);
+        }
+        if((collision.gameObject.CompareTag("mainWeapon") || collision.gameObject.CompareTag("subWeapon")) && IsStunning.Equals(false))
+        {
+            StunCountdown = Stat.StunTime;
+            IsStunning = true;
         }
     }
     private void hurt(int _amount)
@@ -36,15 +57,14 @@ public class EnemyStat : MonoBehaviour
             obj.transform.position = this.gameObject.transform.position;
             obj.SetActive(true);
             gameObject.SetActive(false);
-            PlayerController.Instance.PlayerStat.GetPoint(point);
+            PlayerManager.Instance.Stat.GetPoint(point);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerTag"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerController.Instance.PlayerStat.hurt(damage);
+            PlayerManager.Instance.Stat.hurt(damage);
         }
-
     }
 }

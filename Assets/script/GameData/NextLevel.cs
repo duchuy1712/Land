@@ -8,19 +8,25 @@ public class NextLevel : MonoBehaviour
     public int nextLevelIndex;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerTag"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             Save();
             DataGame.Instance.globaldata.Level = nextLevelIndex;
-            OnGameManager.Instance.GameCompelete();
+            GameCompelete();
         }
     }
-
     private void Save()
     {
-        DataGame.Instance.userdata.Live = PlayerController.Instance.PlayerStat.live;
-        DataGame.Instance.userdata.mainWeaponLv = PlayerController.Instance.AttackController.MainWeaponLv;
-        DataGame.Instance.userdata.subWeapon = PlayerController.Instance.AttackController.subWeaponName;
-        DataGame.Instance.userdata.score = PlayerController.Instance.PlayerStat.score;
+        DataGame.Instance.userdata.Live = PlayerManager.Instance.Stat.live;
+        DataGame.Instance.userdata.mainWeaponLv = PlayerManager.Instance.AttackControl.CurrentMainWeapon;
+        DataGame.Instance.userdata.subWeapon = PlayerManager.Instance.AttackControl.CurrentSubWeapon;
+        DataGame.Instance.userdata.score = PlayerManager.Instance.Stat.score;
+    }
+    private void GameCompelete()
+    {
+        AudioManager.Instance.PlayMusic(null);
+        AudioManager.Instance.PlayGlobalSFX("Victory");
+        Time.timeScale = 0;
+        UIGame.Instance.GameOver.SetActive(true);
     }
 }
